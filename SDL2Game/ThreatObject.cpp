@@ -18,7 +18,8 @@ ThreatObject::ThreatObject()
 	input_type_.left_ = 0;
 	type_move_ = REMAIN_THREAT;
 	////dasdasdasd
-	///dasdasdasdsa/dasdasdasdasdasd
+	//dasdasdasdasdasdasdasd
+	//dasdasdasdsad
 }
 ThreatObject::~ThreatObject()
 {
