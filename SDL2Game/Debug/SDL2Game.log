@@ -1,16 +1,28 @@
-﻿Build started 13/03/2021 12:19:17 AM.
+﻿Build started 13/03/2021 10:32:57 PM.
      1>Project "D:\VSGame\SDL2Game\SDL2Game\SDL2Game.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\SDL2Game.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\SDL2Game.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ThreatObject.cpp
+         ThreatObject.cpp
      1>d:\vsgame\sdl2game\sdl2game\commonfunction.h(43): warning C4091: 'typedef ' : ignored on left of 'Input' when no variable is declared
      1>d:\vsgame\sdl2game\sdl2game\commonfunction.h(56): warning C4091: 'typedef ' : ignored on left of 'Map' when no variable is declared
-     1>d:\vsgame\sdl2game\sdl2game\main.cpp(92): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>d:\vsgame\sdl2game\sdl2game\main.cpp(95): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\vsgame\sdl2game\sdl2game\main.cpp(96): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>d:\vsgame\sdl2game\sdl2game\main.cpp(117): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
-     1>d:\vsgame\sdl2game\sdl2game\main.cpp(181): warning C4018: '<' : signed/unsigned mismatch
-     1>d:\vsgame\sdl2game\sdl2game\main.cpp(207): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(58): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(59): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(78): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(131): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(132): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(134): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(135): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(147): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(161): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(175): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(176): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(178): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(179): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(189): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(203): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(216): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(279): warning C4244: 'argument' : conversion from 'float' to 'const int', possible loss of data
+     1>d:\vsgame\sdl2game\sdl2game\threatobject.cpp(287): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\VSGame\SDL2Game\Debug\SDL2Game.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_mixer.lib SDL2_ttf.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\VSGame\SDL2Game\Debug\SDL2Game.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\VSGame\SDL2Game\Debug\SDL2Game.lib" /MACHINE:X86 Debug\AttackObject.obj
          Debug\BaseObject.obj
@@ -26,4 +38,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.15
+Time Elapsed 00:00:01.18

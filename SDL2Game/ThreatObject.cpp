@@ -17,6 +17,8 @@ ThreatObject::ThreatObject()
 	animation_right = 0;
 	input_type_.left_ = 0;
 	type_move_ = REMAIN_THREAT;
+	////dasdasdasd
+	///dasdasdasdsa/dasdasdasdasdasd
 }
 ThreatObject::~ThreatObject()
 {
