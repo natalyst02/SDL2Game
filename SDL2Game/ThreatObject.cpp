@@ -146,6 +146,8 @@ void ThreatObject::CheckMap(Map& map_data)
 				x_pos_ = x2 * TILE_SIZE;
 				x_pos_ -= width_frame_ +1;
 				x_val_ = 0 ;
+				input_type_.left_ = 1;
+				input_type_.right_ = 0;
 				}
 
 		}
@@ -157,6 +159,9 @@ void ThreatObject::CheckMap(Map& map_data)
 				{
 				x_pos_ = (x1 + 1 )* TILE_SIZE;
 				x_val_ = 0 ;
+				input_type_.left_ = 0;
+				input_type_.right_ = 1;
+
 				}
 			
 		}
@@ -184,6 +189,7 @@ void ThreatObject::CheckMap(Map& map_data)
 				y_pos_ -= (height_frame_ +1);
 				y_val_ = 0;
 				on_ground_ = true;
+			
 				}
 		}
 		else if (y_val_ < 0)
@@ -192,6 +198,7 @@ void ThreatObject::CheckMap(Map& map_data)
 			int val2 = map_data.tile[y1][x2];
 			if ((val1 != 0 && val1 != COIN) || (val2 != 0 && val2 != COIN))
 			{
+				
 				y_pos_ = (y1 + 1 ) *TILE_SIZE;
 				y_val_ = 0 ;
 			}
@@ -225,18 +232,20 @@ void ThreatObject::ImpMoveType(SDL_Renderer* screen)
 	{
 		if ( on_ground_ ==true )
 		{
-			if (x_pos_ > animation_right)
+			if (x_pos_ > animation_right   )
 			{
 				input_type_.left_ = 1;
 				input_type_.right_ = 0;
 				LoadImg("img//threat_left.png",screen);
 			}
-			else if ( x_pos_ < animation_left)
+			else if ( x_pos_ < animation_left )
 			{
 				input_type_.right_ = 1;
 				input_type_.left_ = 0;
 				LoadImg("img//threat_right.png",screen);
 			}
+			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {LoadImg("img//threat_left.png",screen);}
+			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){LoadImg("img//threat_right.png",screen);}
 
 		}
 		else 
@@ -256,6 +265,53 @@ void ThreatObject::ImpMoveType(SDL_Renderer* screen)
 
 	}
 
+
+}
+void ThreatObject::InitAttack( AttackObject* p_attack, SDL_Renderer* screen)
+{
+	if (p_attack != NULL) 
+	{
+		p_attack->set_attack_type(AttackObject::ATTACK1);
+		p_attack->LoadAttackType(screen);
+		p_attack->set_is_move(true);
+		p_attack->set_attack_sign(AttackObject::SIGN_LEFT);
+		p_attack->SetRect( x_pos_ +20, y_pos_ +20);
+		p_attack->set_x_val(20);
+		attack_list_.push_back(p_attack);
+	}
+
+}
+void ThreatObject::MakeAttack(SDL_Renderer* screen, const int& x_border, const int& y_border)
+{
+	for (int i = 0; i < attack_list_.size(); i++)
+	{
+		AttackObject* p_attack = attack_list_.at(i);
+		if (p_attack != NULL)
+		{
+			if (p_attack->get_is_move())
+			{
+				int distance = rect_.x - p_attack->GetRect().x;
+				if (distance < 300 )
+				{
+				p_attack->HandleMove(x_border, y_border);
+				p_attack->Render(screen);
+				}
+				else 
+				{
+					p_attack->set_is_move(false);
+				}
+
+			}
+			else
+			{
+				p_attack->set_is_move(true);
+				p_attack->SetRect(this->rect_.x +20, this->rect_.y +10 );
+			}
+
+
+		}
+
+	}
 
 }
 

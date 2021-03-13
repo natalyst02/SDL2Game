@@ -1,7 +1,7 @@
 
 #ifndef THREAT_OBJECT_H_
 #define THREAT_OBJECT_H_
-
+#include "AttackObject.h"
 #include "BaseObject.h"
 #include "CommonFunction.h"
 #define THREAT_FRAME_NUM 8
@@ -41,6 +41,10 @@ public:
 	void set_animation_pos( const int& pos_a, const int& pos_b){animation_left = pos_a; animation_right = pos_b;}
 	void set_input_left(const int& inputleft){input_type_.left_ = inputleft;}
 	void ImpMoveType( SDL_Renderer* screen);
+	std::vector<AttackObject*> get_attack_list() const { return attack_list_;}
+	void set_attack_list(const std::vector<AttackObject*>& at_list) { attack_list_ = at_list;}
+	void InitAttack( AttackObject* p_attack, SDL_Renderer* screen);
+	void MakeAttack(SDL_Renderer* screen, const int& x_border, const int& y_border);
 private:
 
 	int frame_;
@@ -58,8 +62,10 @@ private:
 	int type_move_ ;
 	int animation_left;
 	int animation_right;
+	int barrier;
 
 	Input input_type_;
+	std::vector <AttackObject*> attack_list_;
 };
 
 

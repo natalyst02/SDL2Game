@@ -92,8 +92,8 @@ bool InitData()
 			p_threat->set_x_pos( 500 + i*500);
 			p_threat->set_y_pos (200);
 
-			int pos1 = p_threat->get_x_pos()  - 60;
-			int pos2 = p_threat->get_x_pos()	+60;
+			int pos1 = p_threat->get_x_pos() - 200;
+			int pos2 = p_threat->get_x_pos()+200;
 			p_threat->set_animation_pos(pos1,pos2);
 			if ( i % 2 == 0)
 			p_threat->set_input_left(1);
@@ -118,6 +118,10 @@ bool InitData()
 			p_threat->set_y_pos(250);
 			p_threat->set_type_move(ThreatObject::REMAIN_THREAT);
 			p_threat->set_input_left(0);
+
+			AttackObject* p_attack = new AttackObject();
+			p_threat->InitAttack(p_attack,g_screen);
+
 			list_threats.push_back(p_threat);
 		}
 
@@ -182,6 +186,7 @@ int main(int argc, char* argv[])
 				p_threat->SetMapXY(map_data.start_x_, map_data.start_y_);
 				p_threat->ImpMoveType(g_screen);
 				p_threat->DoPlayer(map_data);
+				p_threat->MakeAttack(g_screen,SCREEN_WIDTH,SCREEN_HEIGHT);
 				p_threat->Show(g_screen);
 			}
 
@@ -199,7 +204,16 @@ int main(int argc, char* argv[])
 		}
 
 	}
-
+	for (int i = 0; i < threats_list.size(); i++)
+		{
+			ThreatObject* p_threat = threats_list.at(i);
+			if (p_threat)
+			{
+				p_threat->Free();
+				p_threat = NULL;
+			}
+	}
+	threats_list.clear();
 	close();
     return 0;
 }
