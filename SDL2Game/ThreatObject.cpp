@@ -318,5 +318,29 @@ void ThreatObject::MakeAttack(SDL_Renderer* screen, const int& x_border, const i
 
 }
 
+void ThreatObject::RemoveAttack(const int& num)
+{
+	if (attack_list_.size() > 0 && num < attack_list_.size())
+	{
+		AttackObject* p_attack = attack_list_.at(num);
+		attack_list_.erase(attack_list_.begin() + num);
 
+		if (p_attack )
+		{
+			delete p_attack;
+			p_attack = NULL;
+		}
+
+	}
+
+}
+SDL_Rect ThreatObject::GetRectFrame()
+{
+	SDL_Rect rect;
+	rect.x = rect_.x;
+	rect.y = rect_.y;
+	rect.h = height_frame_;
+	rect.w = width_frame_;
+	return rect;
+}
 

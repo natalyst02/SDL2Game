@@ -45,6 +45,8 @@ public:
 	void set_attack_list(const std::vector<AttackObject*>& at_list) { attack_list_ = at_list;}
 	void InitAttack( AttackObject* p_attack, SDL_Renderer* screen);
 	void MakeAttack(SDL_Renderer* screen, const int& x_border, const int& y_border);
+	void RemoveAttack(const int& num);
+	SDL_Rect GetRectFrame();
 private:
 
 	int frame_;

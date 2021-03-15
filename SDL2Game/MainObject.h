@@ -42,6 +42,8 @@ public:
 	std::vector<AttackObject*> get_attack_list() const {return p_attack_list_;}
 	void HandleAttackObject(SDL_Renderer* des);
 	void CoinPlus();
+	void RemoveAttack(const int& num);
+	SDL_Rect GetRectFrame();
 
 private:
 

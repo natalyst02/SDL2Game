@@ -6,6 +6,7 @@
 #include "MainObject.h"
 #include "ImpTimer.h"
 #include "ThreatObject.h"
+#include "Collision.h"
 
 BaseObject	g_background;
 
@@ -188,9 +189,83 @@ int main(int argc, char* argv[])
 				p_threat->DoPlayer(map_data);
 				p_threat->MakeAttack(g_screen,SCREEN_WIDTH,SCREEN_HEIGHT);
 				p_threat->Show(g_screen);
+
+				SDL_Rect rect_player = p_player.GetRectFrame();
+				bool CheckColli = false;
+				std::vector<AttackObject*> AttackObj = p_threat->get_attack_list();
+				for (int num = 0; num < AttackObj.size(); num++)
+				{
+					AttackObject* Threat_attack = AttackObj.at(num);
+					if ( Threat_attack != NULL)
+					{
+						CheckColli = Collision::CheckCollision(Threat_attack->GetRect(),rect_player);
+						if (CheckColli)
+						{
+							p_threat->RemoveAttack(num);
+							break;
+						}
+
+					}
+
+				}
+
+				SDL_Rect rect_threat = p_threat->GetRectFrame();
+				bool CheckColli2 = Collision::CheckCollision(rect_player, rect_threat);
+				if (CheckColli == true || CheckColli2 == true )
+				{
+					{
+						if (MessageBox(NULL,L"GAME OVER",L"Info",MB_OK|MB_ICONSTOP)==IDOK)
+						{
+							p_threat->Free();
+							close();
+							SDL_Quit();
+							return 0;
+						}
+
+					}
+
+				}
+
 			}
 
 		}
+
+		std::vector <AttackObject*> attackplayer = p_player.get_attack_list();
+
+		for ( int num = 0; num < attackplayer.size(); num++ )
+		{
+			AttackObject* p_attack = attackplayer.at(num);
+			if (p_attack != NULL)
+			{
+				for (int i = 0 ;i < threats_list.size(); i++ )
+				{
+					ThreatObject* threatattack = threats_list.at(i);
+					if (threatattack != NULL)
+					{
+						SDL_Rect objRect;
+						objRect.x = threatattack->GetRect().x;
+						objRect.y = threatattack->GetRect().y;
+						objRect.w = threatattack->get_width_frame();
+						objRect.h = threatattack->get_height_frame();
+
+						SDL_Rect playerRect = p_attack->GetRect();
+
+						bool CheckColl = Collision::CheckCollision(objRect,playerRect);
+						if (CheckColl )
+						{
+							p_player.RemoveAttack(num);
+							threatattack->Free();
+							threats_list.erase(threats_list.begin() + i);
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
 
 
 		SDL_RenderPresent(g_screen);

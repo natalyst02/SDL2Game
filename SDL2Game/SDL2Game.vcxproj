@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClInclude Include="AttackObject.h" />
     <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="game_map.h" />
     <ClInclude Include="MainObject.h" />
@@ -95,6 +96,7 @@
   <ItemGroup>
     <ClCompile Include="AttackObject.cpp" />
     <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CommonFunction.cpp" />
     <ClCompile Include="game_map.cpp" />
     <ClCompile Include="main.cpp" />

@@ -464,3 +464,29 @@ void MainObject::CoinPlus()
 	CoinCount++;
 }
 
+void MainObject::RemoveAttack(const int& num)
+{
+	if (p_attack_list_.size() > 0 && num < p_attack_list_.size())
+	{
+		AttackObject* p_attack = p_attack_list_.at(num);
+		p_attack_list_.erase(p_attack_list_.begin() + num);
+
+		if (p_attack )
+		{
+			delete p_attack;
+			p_attack = NULL;
+		}
+
+	}
+
+}
+
+SDL_Rect MainObject::GetRectFrame()
+{
+	SDL_Rect rect;
+	rect.x = rect_.x;
+	rect.y = rect_.y;
+	rect.h = height_frame_;
+	rect.w = width_frame_;
+	return rect;
+}
