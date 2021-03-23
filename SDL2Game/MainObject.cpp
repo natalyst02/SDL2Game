@@ -21,7 +21,7 @@ MainObject::MainObject()
 	map_y_ = 0;
 	come_back_time= 0;
 	BulletsType = 1;
-	CoinCount = 0;
+	CoinCount = 10;
 
 }
 
@@ -30,9 +30,9 @@ MainObject::~MainObject()
 
 }
 
-bool MainObject::LoadImg(std::string path, SDL_Renderer* screen)
+bool MainObject::LoadImg(std::string path, SDL_Renderer* screen,int COLOR_KEY_R, int COLOR_KEY_G, int COLOR_KEY_B)
 {
-	bool ret = BaseObject::LoadImg(path, screen);
+	bool ret = BaseObject::LoadImg(path, screen,169,173,153);
 
 	if (ret == TRUE)
 	{
@@ -63,26 +63,26 @@ void MainObject::Show(SDL_Renderer* des)
 	if (status_ == WALK_LEFT)
 	{
 		if (on_ground_ ==true )
-		LoadImg("img//player_left.png",des);
+		LoadImg("img//player_left.png",des,169,173,153);
 		else 
 		{
-			LoadImg("img//fly_left.png",des);
+			LoadImg("img//fly_left.png",des,169,173,153);
 		}
 
 	}
 	else if (status_ == WALK_RIGHT) 
 	{
 		if (on_ground_ ==true )
-		LoadImg("img//player_right.png",des);
+		LoadImg("img//player_right.png",des,169,173,153);
 		else 
 		{
-			LoadImg("img//fly_right.png",des);
+			LoadImg("img//fly_right.png",des,169,173,153);
 		}
 
 	}
 	else 
 	{
-		LoadImg("img//player_jump.png",des);
+		LoadImg("img//player_jump.png",des,169,173,153);
 	}
 	if (input_type_.left_ == 1 ||
 		input_type_.right_ == 1)
@@ -99,15 +99,17 @@ void MainObject::Show(SDL_Renderer* des)
 		frame_ = 0;
 	}
 
+	if (come_back_time == 0)
+	{
+		rect_.x = x_pos_ - map_x_;
+		rect_.y = y_pos_ - map_y_ ;
 
-	rect_.x = x_pos_ - map_x_;
-	rect_.y = y_pos_ - map_y_ ;
+		SDL_Rect* current_clip = &frame_clip_[frame_];
 
-	SDL_Rect* current_clip = &frame_clip_[frame_];
+		SDL_Rect renderQuad = {rect_.x, rect_.y, width_frame_, height_frame_};
 
-	SDL_Rect renderQuad = {rect_.x, rect_.y, width_frame_, height_frame_};
-
-	SDL_RenderCopy(des, p_object_, current_clip, &renderQuad);
+		SDL_RenderCopy(des, p_object_, current_clip, &renderQuad);
+	}
 }
 
 void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
@@ -122,9 +124,6 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 				input_type_.right_ = 1;
 				input_type_.left_ = 0;
 				
-
-
-
 			}
 			break;
 		case SDLK_LEFT:
@@ -185,10 +184,11 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 			break;
 		}
 	}
-	if (events.type == SDL_MOUSEBUTTONDOWN)
+	if (events.type == SDL_MOUSEBUTTONDOWN && CoinCount > 0)
 	{
 		if (events.button.button == SDL_BUTTON_LEFT)
 		{
+			CoinPlus(-1);
 			AttackObject* p_attack = new AttackObject();
 			if (BulletsType == 1)
 			p_attack->set_attack_type(AttackObject::ATTACK1);
@@ -215,6 +215,11 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 	}
 
 
+
+}
+
+void MainObject::regame()
+{
 
 }
 
@@ -250,9 +255,10 @@ void MainObject::DoPlayer(Map& map_data)
 		}
 
 
-	CheckMap(map_data);
-	MoveOnMap(map_data);
+		CheckMap(map_data);
+		MoveOnMap(map_data);
 	}
+
 	if (come_back_time > 0 )
 	{
 		come_back_time --;
@@ -324,7 +330,7 @@ void MainObject::CheckMap(Map& map_data)
 			{
 				map_data.tile[y1][x2] = 0;
 				map_data.tile[y2][x2] = 0;
-				CoinPlus();
+				CoinPlus(1);
 			}
 			else 
 			{
@@ -345,7 +351,7 @@ void MainObject::CheckMap(Map& map_data)
 			{
 				map_data.tile[y1][x1] = 0;
 				map_data.tile[y2][x1] = 0;
-				CoinPlus();
+				CoinPlus(1);
 			}
 			else
 			{
@@ -378,7 +384,7 @@ void MainObject::CheckMap(Map& map_data)
 			{
 				map_data.tile[y2][x1] = 0;
 				map_data.tile[y2][x2] = 0;
-				CoinPlus();
+				CoinPlus(1);
 			}
 			else
 			{
@@ -399,7 +405,7 @@ void MainObject::CheckMap(Map& map_data)
 			{
 				map_data.tile[y1][x1]= 0;
 				map_data.tile[y1][x2] = 0;
-				CoinPlus();
+				CoinPlus(1);
 			}
 			else 
 			{
@@ -435,10 +441,20 @@ void MainObject::HandleAttackObject(SDL_Renderer* des)
 		AttackObject* p_attack = p_attack_list_.at(i);
 		if (p_attack != NULL)
 		{
-			if (p_attack->get_is_move() == true )
+
+			if (p_attack->get_is_move())
 			{
+				int distance = abs(rect_.x - p_attack->GetRect().x);
+				if (distance < 300 )
+				{
 				p_attack->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
 				p_attack->Render(des);
+				}
+				else 
+				{
+					p_attack->set_is_move(false);
+				}
+
 			}
 			else
 			{
@@ -459,9 +475,9 @@ void MainObject::HandleAttackObject(SDL_Renderer* des)
 
 }
 
-void MainObject::CoinPlus()
+void MainObject::CoinPlus(int val)
 {
-	CoinCount++;
+	CoinCount += val;
 }
 
 void MainObject::RemoveAttack(const int& num)

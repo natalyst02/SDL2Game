@@ -7,9 +7,9 @@
 #include "ImpTimer.h"
 #include "ThreatObject.h"
 #include "Collision.h"
-
+#include "TextObject.h"
 BaseObject	g_background;
-
+TTF_Font* font_time = NULL;
 bool InitData()
 {
 	 bool success = true;
@@ -47,7 +47,15 @@ bool InitData()
 				 success = false;
 
 		 }
-
+		 if (TTF_Init() == -1)
+        {
+            success = false;
+        }
+        font_time = TTF_OpenFont("font//dlxfont_.ttf", 15);
+        if (font_time == NULL)
+        {
+            success = false;
+        }
 
 	 }
 
@@ -56,7 +64,7 @@ bool InitData()
 
  bool LoadBackground()
  {
-	 bool ret = g_background.LoadImg("img//background.png", g_screen);
+	 bool ret = g_background.LoadImg("img//background.png", g_screen,169,173,153);
 	 if (ret == false)
 		 return false;
 
@@ -87,7 +95,7 @@ bool InitData()
 		ThreatObject* p_threat = (move_threats + i);
 		if (p_threat != NULL)
 		{
-			p_threat->LoadImg("img/threat_left.png",g_screen);
+			p_threat->LoadImg("img/threat_left.png",g_screen,169,173,153);
 			p_threat->set_clips();
 			p_threat->set_type_move(ThreatObject::MOVE_THREAT);
 			p_threat->set_x_pos( 500 + i*500);
@@ -113,7 +121,7 @@ bool InitData()
 		ThreatObject* p_threat = (threats_objs + i);
 		if (p_threat != NULL)
 		{
-			p_threat->LoadImg("img/threat_level.png",g_screen);
+			p_threat->LoadImg("img/threat_level.png",g_screen,169,173,153);
 			p_threat->set_clips();
 			p_threat->set_x_pos(700 + i*1200 );
 			p_threat->set_y_pos(250);
@@ -127,6 +135,30 @@ bool InitData()
 		}
 
 	}
+	
+	ThreatObject* fly_threats = new ThreatObject[20];
+	for (int i = 0; i < 20; i++)
+	{
+		ThreatObject* p_threat = (fly_threats + i);
+		if (p_threat != NULL)
+		{
+			p_threat->LoadImg("img/fly3.png",g_screen,166,141,85);
+			p_threat->set_clips();
+			p_threat->set_type_move(ThreatObject::FLY_THREAT);
+			p_threat->set_x_pos( 500 + i*500);
+			p_threat->set_y_pos (100);
+
+			int pos1 = p_threat->get_x_pos() - 200;
+			int pos2 = p_threat->get_x_pos()+200;
+			p_threat->set_animation_pos(pos1,pos2);
+			if ( i % 2 == 0)
+			p_threat->set_input_left(1);
+			else 
+				p_threat->set_input_left(0);
+			list_threats.push_back(p_threat);
+		}
+	}
+	
 	return list_threats;
  }
 
@@ -145,12 +177,19 @@ int main(int argc, char* argv[])
 	game_map.LoadTiles(g_screen);
 
 	MainObject p_player;
-	p_player.LoadImg("img//player_right.png",g_screen);
+	p_player.LoadImg("img//player_right.png",g_screen,169,173,153);
 	p_player.set_clips();
 
 	std::vector<ThreatObject*> threats_list = MakeThreatList();
 
 	bool is_quit = false;
+
+
+	TextObject time_game;
+    time_game.SetColor(TextObject::RED_TEXT);
+
+	TextObject BulletPlayer;
+    BulletPlayer.SetColor(TextObject::WHITE_TEXT);
 
 	while (!is_quit)
 	{
@@ -201,7 +240,7 @@ int main(int argc, char* argv[])
 						CheckColli = Collision::CheckCollision(Threat_attack->GetRect(),rect_player);
 						if (CheckColli)
 						{
-							p_threat->RemoveAttack(num);
+							//p_threat->RemoveAttack(num);
 							break;
 						}
 
@@ -214,14 +253,18 @@ int main(int argc, char* argv[])
 				if (CheckColli == true || CheckColli2 == true )
 				{
 					{
-						if (MessageBox(NULL,L"GAME OVER",L"Info",MB_OK|MB_ICONSTOP)==IDOK)
-						{
-							p_threat->Free();
-							close();
-							SDL_Quit();
-							return 0;
-						}
-
+						//if (MessageBox(NULL,L"GAME OVER",L"Info",MB_OK|MB_ICONSTOP)==IDOK)
+						//{
+							//p_threat->Free();
+							//close();
+							//SDL_Quit();
+							//return 0;
+						//}
+						//p_player.CoinPlus(10);
+						p_player.SetRect(0,0);
+						p_player.SetComebackTime(2);
+						//SDL_Delay(100);
+						//continue;
 					}
 
 				}
@@ -267,6 +310,34 @@ int main(int argc, char* argv[])
 		}
 
 
+		std::string str_time = "Time : ";
+		int time_val = SDL_GetTicks() / 1000;
+		int val_time = time_val;
+ 
+        std::string str_val = std::to_string(val_time);
+        str_time += str_val;
+
+        time_game.SetText(str_time);
+        time_game.LoadFromRenderText(font_time,g_screen);
+        time_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
+   
+		std::string str_rebullet = " Reload Bullet!!!!!!";
+		std::string str_bullet = "Bullet : ";
+		int Bullet = p_player.RestBullet();
+		if (Bullet == 0 ) 
+		{
+			BulletPlayer.SetText(str_rebullet);
+		BulletPlayer.LoadFromRenderText(font_time, g_screen);
+		BulletPlayer.RenderText(g_screen,50, 15);
+		}
+
+		std::string BulletS = std::to_string(Bullet);
+		str_bullet += BulletS;
+
+
+		BulletPlayer.SetText(str_bullet);
+		BulletPlayer.LoadFromRenderText(font_time, g_screen);
+		BulletPlayer.RenderText(g_screen, SCREEN_WIDTH * 0.5 - 250, 15);
 
 		SDL_RenderPresent(g_screen);
 

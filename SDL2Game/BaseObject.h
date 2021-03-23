@@ -12,7 +12,7 @@ public:
 	SDL_Rect GetRect() const { return rect_;} 
 	SDL_Texture* GetObject() const { return p_object_;}
 
-	virtual bool LoadImg(std::string path, SDL_Renderer* screen);
+	virtual bool LoadImg(std::string path, SDL_Renderer* screen,int COLOR_KEY_R, int COLOR_KEY_G, int COLOR_KEY_B);
 	void Render(SDL_Renderer* des, const SDL_Rect* clip = NULL);
 	void Free();
 

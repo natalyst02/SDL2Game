@@ -26,7 +26,7 @@ public:
 
 	};
 
-	bool LoadImg(std::string path, SDL_Renderer* screen);
+	bool LoadImg(std::string path, SDL_Renderer* screen,int COLOR_KEY_R, int COLOR_KEY_G, int COLOR_KEY_B);
 	void Show(SDL_Renderer* des);
 	void HandleInputAction(SDL_Event events, SDL_Renderer* screen);
 	void set_clips();
@@ -41,9 +41,13 @@ public:
 	}
 	std::vector<AttackObject*> get_attack_list() const {return p_attack_list_;}
 	void HandleAttackObject(SDL_Renderer* des);
-	void CoinPlus();
+	void CoinPlus(int val);
 	void RemoveAttack(const int& num);
 	SDL_Rect GetRectFrame();
+	void SetComebackTime(const int& cbt){come_back_time =cbt;}
+	void regame();
+	int RestBullet() const {return CoinCount;}
+
 
 private:
 

@@ -61,7 +61,7 @@ void GameMap::LoadTiles(SDL_Renderer* screen)
 
 		fclose(fp);
 
-		tile_mat[i].LoadImg(file_img, screen);
+		tile_mat[i].LoadImg(file_img, screen,169,173,153);
 	}
 
 }

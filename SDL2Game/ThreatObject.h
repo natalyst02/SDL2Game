@@ -18,6 +18,7 @@ public:
 	{
 		REMAIN_THREAT = 0,
 		MOVE_THREAT = 1,
+		FLY_THREAT = 2,
 	};
 
 
@@ -30,7 +31,7 @@ public:
 	void SetMapXY (const int& mp_x, const int& mp_y){map_x_=mp_x;map_y_=mp_y;}
 
 	void set_clips();
-	bool LoadImg(std::string path, SDL_Renderer* screen);
+	bool LoadImg(std::string path, SDL_Renderer* screen,int COLOR_KEY_R, int COLOR_KEY_G, int COLOR_KEY_B);
 	void Show(SDL_Renderer* des);
 	int get_width_frame()const{return width_frame_;}
 	int get_height_frame()const{return height_frame_;}

@@ -21,13 +21,13 @@ void AttackObject::LoadAttackType(SDL_Renderer* des)
 {
 	if (attack_type_ == ATTACK1)
 	{
-		LoadImg("img//player_attack1.png",des);
+		LoadImg("img//player_attack1.png",des,169,173,153);
 	}
 	else if (attack_type_ == ATTACK2)
 	{
-		LoadImg("img//player_attack2.png",des);
+		LoadImg("img//player_attack2.png",des,169,173,153);
 	}
-	else LoadImg("img//player_attack3.png",des);
+	else LoadImg("img//player_attack3.png",des,169,173,153);
 
 
 }

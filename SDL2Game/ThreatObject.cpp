@@ -26,10 +26,10 @@ ThreatObject::~ThreatObject()
 
 }
 
-bool ThreatObject::LoadImg(std::string path, SDL_Renderer* screen)
+bool ThreatObject::LoadImg(std::string path, SDL_Renderer* screen,int COLOR_KEY_R, int COLOR_KEY_G, int COLOR_KEY_B)
 {
 
-	bool ret = BaseObject::LoadImg(path,screen);
+	bool ret = BaseObject::LoadImg(path,screen,COLOR_KEY_R,COLOR_KEY_G,COLOR_KEY_B);
 	if (ret == true )
 	{
 		width_frame_ = rect_.w / THREAT_FRAME_NUM;
@@ -77,12 +77,13 @@ void ThreatObject::DoPlayer(Map& tMap)
 	if (comebacktime == 0 )
 	{
 		x_val_ =0;
+		if (type_move_ != FLY_THREAT ){
 		y_val_ += THREAT_GRAVITY_SPEED;
 		if (y_val_ >= THREAT_MAX_FALL_SPEED)
 		{
 			y_val_ = THREAT_MAX_FALL_SPEED;
-		}
-		if (type_move_ == MOVE_THREAT)
+		}}
+		if (type_move_ == MOVE_THREAT|| type_move_ == FLY_THREAT)
 		{
 		if (input_type_.left_ == 1)
 		{
@@ -231,7 +232,7 @@ void ThreatObject::ImpMoveType(SDL_Renderer* screen)
 	{
 
 	}
-	else
+	else if (type_move_ == MOVE_THREAT)
 	{
 		if ( on_ground_ ==true )
 		{
@@ -239,33 +240,50 @@ void ThreatObject::ImpMoveType(SDL_Renderer* screen)
 			{
 				input_type_.left_ = 1;
 				input_type_.right_ = 0;
-				LoadImg("img//threat_left.png",screen);
+				LoadImg("img//threat_left.png",screen,169,173,153);
 			}
 			else if ( x_pos_ < animation_left )
 			{
 				input_type_.right_ = 1;
 				input_type_.left_ = 0;
-				LoadImg("img//threat_right.png",screen);
+				LoadImg("img//threat_right.png",screen,169,173,153);
 			}
-			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {LoadImg("img//threat_left.png",screen);}
-			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){LoadImg("img//threat_right.png",screen);}
+			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {LoadImg("img//threat_left.png",screen,169,173,153);}
+			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){LoadImg("img//threat_right.png",screen,169,173,153);}
 
 		}
 		else 
 		{
 			if (input_type_.left_ == 1 )
 			{
-				LoadImg("img//threat_left.png",screen);
+				LoadImg("img//threat_left.png",screen,169,173,153);
 			}
 			else
 			{
-				LoadImg("img//threat_right.png",screen);
+				LoadImg("img//threat_right.png",screen,169,173,153);
 			}
 
 
 		}
 
 
+	}
+	else 
+	{
+		if (x_pos_ > animation_right   )
+			{
+				input_type_.left_ = 1;
+				input_type_.right_ = 0;
+				LoadImg("img//fly3.png",screen,166,141,85);
+			}
+			else if ( x_pos_ < animation_left )
+			{
+				input_type_.right_ = 1;
+				input_type_.left_ = 0;
+				LoadImg("img//mau2.png",screen,237,149,90);
+			}
+			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {LoadImg("img//fly3.png",screen,166,141,85);}
+			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){LoadImg("img//mau2.png",screen,237,149,90);}
 	}
 
 
@@ -293,7 +311,7 @@ void ThreatObject::MakeAttack(SDL_Renderer* screen, const int& x_border, const i
 		{
 			if (p_attack->get_is_move())
 			{
-				int distance = rect_.x - p_attack->GetRect().x;
+				int distance = abs(rect_.x - p_attack->GetRect().x);
 				if (distance < 300 )
 				{
 				p_attack->HandleMove(x_border, y_border);
