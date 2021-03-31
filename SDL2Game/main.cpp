@@ -8,8 +8,10 @@
 #include "ThreatObject.h"
 #include "Collision.h"
 #include "TextObject.h"
+#include "MenuGame.h"
 BaseObject	g_background;
 TTF_Font* font_time = NULL;
+TTF_Font* g_font_MENU = NULL;
 bool InitData()
 {
 	 bool success = true;
@@ -56,7 +58,11 @@ bool InitData()
         {
             success = false;
         }
-
+		g_font_MENU = TTF_OpenFont("font//dlxfont_.ttf", 80);
+        if (g_font_MENU == NULL)
+        {
+            return false;
+        }
 	 }
 
 	 return success;
@@ -100,11 +106,13 @@ bool InitData()
 			p_threat->set_type_move(ThreatObject::MOVE_THREAT);
 			p_threat->set_x_pos( 500 + i*500);
 			p_threat->set_y_pos (200);
-
+			int v1 = rand() % 100;
+			int v2 = rand() % 4;
+			p_threat->set_image_threat(v2);
 			int pos1 = p_threat->get_x_pos() - 200;
 			int pos2 = p_threat->get_x_pos()+200;
 			p_threat->set_animation_pos(pos1,pos2);
-			if ( i % 2 == 0)
+			if (  v1% 2 == 0)
 			p_threat->set_input_left(1);
 			else 
 				p_threat->set_input_left(0);
@@ -126,11 +134,12 @@ bool InitData()
 			p_threat->set_x_pos(700 + i*1200 );
 			p_threat->set_y_pos(250);
 			p_threat->set_type_move(ThreatObject::REMAIN_THREAT);
+
 			p_threat->set_input_left(0);
 
 			AttackObject* p_attack = new AttackObject();
 			p_threat->InitAttack(p_attack,g_screen);
-
+			
 			list_threats.push_back(p_threat);
 		}
 
@@ -142,12 +151,14 @@ bool InitData()
 		ThreatObject* p_threat = (fly_threats + i);
 		if (p_threat != NULL)
 		{
-			p_threat->LoadImg("img/fly3.png",g_screen,166,141,85);
+			p_threat->LoadImg("img/mau_right.png",g_screen,186,207,184);
 			p_threat->set_clips();
 			p_threat->set_type_move(ThreatObject::FLY_THREAT);
+			int v2 = rand() % 2;
+			p_threat->set_image_threat(v2);
 			p_threat->set_x_pos( 500 + i*500);
 			p_threat->set_y_pos (100);
-
+			int v1 = rand()%100;
 			int pos1 = p_threat->get_x_pos() - 200;
 			int pos2 = p_threat->get_x_pos()+200;
 			p_threat->set_animation_pos(pos1,pos2);
@@ -168,7 +179,10 @@ int main(int argc, char* argv[])
 
 	if (InitData() == false) 
 		return -1;
-
+	 bool quit = false;
+	int ret_menu = MenuGame::ShowMenu(g_screen, g_font_MENU, "Play Game", "Exit", "img//MENU.png");
+    if (ret_menu == 1)
+        quit = true;
 	if (LoadBackground() == false) 
 		return -1;
 
@@ -182,7 +196,7 @@ int main(int argc, char* argv[])
 
 	std::vector<ThreatObject*> threats_list = MakeThreatList();
 
-	bool is_quit = false;
+	//bool quit = false;
 
 
 	TextObject time_game;
@@ -191,14 +205,14 @@ int main(int argc, char* argv[])
 	TextObject BulletPlayer;
     BulletPlayer.SetColor(TextObject::WHITE_TEXT);
 
-	while (!is_quit)
+	while (!quit)
 	{
 		fps_timer.start();
 		while (SDL_PollEvent(&g_event) != 0)
 		{
 			if(g_event.type == SDL_QUIT)
 			{
-				is_quit = true;
+				quit = true;
 			}
 
 			p_player.HandleInputAction(g_event, g_screen);
@@ -319,10 +333,11 @@ int main(int argc, char* argv[])
 
         time_game.SetText(str_time);
         time_game.LoadFromRenderText(font_time,g_screen);
-        time_game.RenderText(g_screen, SCREEN_WIDTH - 200, 15);
+        time_game.RenderText(g_screen, SCREEN_WIDTH - 200, 10);
    
-		std::string str_rebullet = " Reload Bullet!!!!!!";
-		std::string str_bullet = "Bullet : ";
+		
+		std::string str_rebullet = " reload!!!!!!";
+		std::string str_bullet = " Bullet : ";
 		int Bullet = p_player.RestBullet();
 		if (Bullet == 0 ) 
 		{

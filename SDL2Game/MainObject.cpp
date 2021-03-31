@@ -445,7 +445,7 @@ void MainObject::HandleAttackObject(SDL_Renderer* des)
 			if (p_attack->get_is_move())
 			{
 				int distance = abs(rect_.x - p_attack->GetRect().x);
-				if (distance < 300 )
+				if (distance < 400 )
 				{
 				p_attack->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
 				p_attack->Render(des);

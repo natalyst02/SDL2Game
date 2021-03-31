@@ -2,8 +2,8 @@
 #define TEXT_OBJECT_H
 
 #include "CommonFunction.h"
-
-class TextObject
+#include "BaseObject.h"
+class TextObject 
 {
     public:
         TextObject();

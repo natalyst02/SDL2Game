@@ -39,6 +39,7 @@ public:
 	void CheckMap(Map& tMap);
 
 	void set_type_move( const int& typemove) {type_move_ = typemove;}
+	void set_image_threat( const int& typeimg) {type_img = typeimg;}
 	void set_animation_pos( const int& pos_a, const int& pos_b){animation_left = pos_a; animation_right = pos_b;}
 	void set_input_left(const int& inputleft){input_type_.left_ = inputleft;}
 	void ImpMoveType( SDL_Renderer* screen);
@@ -66,6 +67,7 @@ private:
 	int animation_left;
 	int animation_right;
 	int barrier;
+	int type_img;
 
 	Input input_type_;
 	std::vector <AttackObject*> attack_list_;

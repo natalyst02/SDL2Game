@@ -240,16 +240,47 @@ void ThreatObject::ImpMoveType(SDL_Renderer* screen)
 			{
 				input_type_.left_ = 1;
 				input_type_.right_ = 0;
-				LoadImg("img//threat_left.png",screen,169,173,153);
+				if (type_img == 0)
+					LoadImg("img//threat_left.png",screen,169,173,153);
+				else if (type_img == 1)
+					LoadImg("img//1left.png",screen,166,141,85);
+				else if (type_img == 2)
+					LoadImg("img//2left.png",screen,166,141,85);
+				else if (type_img == 3)
+					LoadImg("img//3left.png",screen,169,173,153);
+				
 			}
 			else if ( x_pos_ < animation_left )
 			{
 				input_type_.right_ = 1;
 				input_type_.left_ = 0;
-				LoadImg("img//threat_right.png",screen,169,173,153);
+				if (type_img == 0)
+					LoadImg("img//threat_right.png",screen,169,173,153);
+				else if (type_img == 1)
+					LoadImg("img//1right.png",screen,166,141,85);
+				else if (type_img == 2)
+					LoadImg("img//2right.png",screen,166,141,85);
+				else if (type_img == 3)
+					LoadImg("img//3right.png",screen,166,141,85);
 			}
-			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {LoadImg("img//threat_left.png",screen,169,173,153);}
-			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){LoadImg("img//threat_right.png",screen,169,173,153);}
+			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {
+				if (type_img == 0)
+					LoadImg("img//threat_left.png",screen,169,173,153);
+				else if (type_img == 1)
+					LoadImg("img//1left.png",screen,166,141,85);
+				else if (type_img == 2)
+					LoadImg("img//2left.png",screen,166,141,85);
+				else if (type_img == 3)
+					LoadImg("img//3left.png",screen,166,141,85);}
+			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){
+				if (type_img == 0)
+					LoadImg("img//threat_right.png",screen,169,173,153);
+				else if (type_img == 1)
+					LoadImg("img//1right.png",screen,166,141,85);
+				else if (type_img == 2)
+					LoadImg("img//2right.png",screen,166,141,85);
+				else if (type_img == 3)
+					LoadImg("img//3right.png",screen,166,141,85);}
 
 		}
 		else 
@@ -274,16 +305,28 @@ void ThreatObject::ImpMoveType(SDL_Renderer* screen)
 			{
 				input_type_.left_ = 1;
 				input_type_.right_ = 0;
-				LoadImg("img//fly3.png",screen,166,141,85);
+				if (type_img == 0)
+					LoadImg("img//mau_left.png",screen,186,207,184);
+				else if (type_img == 1)
+					LoadImg("img//mau2_left.png",screen,237,149,90);
 			}
 			else if ( x_pos_ < animation_left )
 			{
 				input_type_.right_ = 1;
 				input_type_.left_ = 0;
-				LoadImg("img//mau2.png",screen,237,149,90);
+				if (type_img == 0)
+					LoadImg("img//mau_right.png",screen,186,207,184);
+				else if (type_img == 1)
+					LoadImg("img//mau2_right.png",screen,237,149,90);
 			}
-			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {LoadImg("img//fly3.png",screen,166,141,85);}
-			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){LoadImg("img//mau2.png",screen,237,149,90);}
+			else if (input_type_.left_ == 1 || input_type_.right_ == 0) {if (type_img == 0)
+					LoadImg("img//mau_left.png",screen,186,207,184);
+				else if (type_img == 1)
+					LoadImg("img//mau2_left.png",screen,237,149,90);}
+			else if (input_type_.right_ == 1|| input_type_.left_ == 0 ){if (type_img == 0)
+					LoadImg("img//mau_right.png",screen,186,207,184);
+				else if (type_img == 1)
+					LoadImg("img//mau2_right.png",screen,237,149,90);}
 	}
 
 
