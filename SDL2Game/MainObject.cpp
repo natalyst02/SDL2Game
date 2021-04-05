@@ -149,12 +149,13 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 		case SDLK_2:
 			{
 				BulletsType = 2 ;
-
+				CoinPlus(1);
 			}
 			break;
 		case SDLK_3:
 			{
 				BulletsType = 3;
+				CoinPlus(2);
 			}
 			break;
 		}
@@ -206,7 +207,7 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 			p_attack->set_attack_sign(AttackObject::SIGN_RIGHT);
 			p_attack->SetRect(this->rect_.x + width_frame_ - 20, rect_.y + height_frame_ *0.05);
 			}
-			p_attack->set_x_val(20);
+			p_attack->set_x_val(25);
 			p_attack->set_is_move(true);
 
 			p_attack_list_.push_back(p_attack);

@@ -340,7 +340,7 @@ void ThreatObject::InitAttack( AttackObject* p_attack, SDL_Renderer* screen)
 		p_attack->set_is_move(true);
 		p_attack->set_attack_sign(AttackObject::SIGN_LEFT);
 		p_attack->SetRect( x_pos_ +20, y_pos_ +20);
-		p_attack->set_x_val(20);
+		p_attack->set_x_val(15);
 		attack_list_.push_back(p_attack);
 	}
 

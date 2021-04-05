@@ -1,0 +1,33 @@
+﻿Build started 01/04/2021 12:00:48 AM.
+     1>Project "D:\VSGame\SDL2Game\SDL2Game\SDL2Game.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\SDL2Game.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\SDL2Game.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt AttackObject.cpp BaseObject.cpp Collision.cpp CommonFunction.cpp game_map.cpp main.cpp MainObject.cpp MenuGame.cpp ImpTimer.cpp TextObject.cpp ThreatObject.cpp
+         AttackObject.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         BaseObject.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         Collision.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         CommonFunction.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         game_map.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         main.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         MainObject.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         MenuGame.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         ImpTimer.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         TextObject.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+         ThreatObject.cpp
+     1>d:\vsgame\sdl2game\sdl2game\CommonFunction.h(6): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+     1>Done Building Project "D:\VSGame\SDL2Game\SDL2Game\SDL2Game.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.33

@@ -53,12 +53,16 @@ bool InitData()
         {
             success = false;
         }
-        font_time = TTF_OpenFont("font//dlxfont_.ttf", 15);
+		 if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+        {
+            success = false;
+        }
+        font_time = TTF_OpenFont("font//dlxfont_.ttf", 20);
         if (font_time == NULL)
         {
             success = false;
         }
-		g_font_MENU = TTF_OpenFont("font//dlxfont_.ttf", 80);
+		g_font_MENU = TTF_OpenFont("font//ARCADE.ttf", 80);
         if (g_font_MENU == NULL)
         {
             return false;
@@ -95,8 +99,8 @@ bool InitData()
  {
 	 std::vector<ThreatObject*> list_threats;
 
-	ThreatObject* move_threats = new ThreatObject[20];
-	for (int i = 0; i < 20; i++)
+	ThreatObject* move_threats = new ThreatObject[50];
+	for (int i = 0; i < 50; i++)
 	{
 		ThreatObject* p_threat = (move_threats + i);
 		if (p_threat != NULL)
@@ -104,13 +108,14 @@ bool InitData()
 			p_threat->LoadImg("img/threat_left.png",g_screen,169,173,153);
 			p_threat->set_clips();
 			p_threat->set_type_move(ThreatObject::MOVE_THREAT);
-			p_threat->set_x_pos( 500 + i*500);
+			int d1 = rand()%800;
+			p_threat->set_x_pos(i*800+d1);
 			p_threat->set_y_pos (200);
-			int v1 = rand() % 100;
+			int v1 = rand() % 10;
 			int v2 = rand() % 4;
 			p_threat->set_image_threat(v2);
 			int pos1 = p_threat->get_x_pos() - 200;
-			int pos2 = p_threat->get_x_pos()+200;
+			int pos2 = p_threat->get_x_pos() + 200;
 			p_threat->set_animation_pos(pos1,pos2);
 			if (  v1% 2 == 0)
 			p_threat->set_input_left(1);
@@ -122,16 +127,17 @@ bool InitData()
 
 
 
-	ThreatObject* threats_objs = new ThreatObject[20];
+	ThreatObject* threats_objs = new ThreatObject[30];
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		ThreatObject* p_threat = (threats_objs + i);
 		if (p_threat != NULL)
 		{
 			p_threat->LoadImg("img/threat_level.png",g_screen,169,173,153);
 			p_threat->set_clips();
-			p_threat->set_x_pos(700 + i*1200 );
+			int d1= rand()%1500;
+			p_threat->set_x_pos(i*1500 +d1 );
 			p_threat->set_y_pos(250);
 			p_threat->set_type_move(ThreatObject::REMAIN_THREAT);
 
@@ -145,8 +151,8 @@ bool InitData()
 
 	}
 	
-	ThreatObject* fly_threats = new ThreatObject[20];
-	for (int i = 0; i < 20; i++)
+	ThreatObject* fly_threats = new ThreatObject[30];
+	for (int i = 0; i < 30; i++)
 	{
 		ThreatObject* p_threat = (fly_threats + i);
 		if (p_threat != NULL)
@@ -156,8 +162,10 @@ bool InitData()
 			p_threat->set_type_move(ThreatObject::FLY_THREAT);
 			int v2 = rand() % 2;
 			p_threat->set_image_threat(v2);
-			p_threat->set_x_pos( 500 + i*500);
-			p_threat->set_y_pos (100);
+			int d1= rand()%1000;
+			p_threat->set_x_pos( 500+ i*1000);
+			int d2 = rand()%200;
+			p_threat->set_y_pos (d2);
 			int v1 = rand()%100;
 			int pos1 = p_threat->get_x_pos() - 200;
 			int pos2 = p_threat->get_x_pos()+200;
@@ -180,9 +188,32 @@ int main(int argc, char* argv[])
 	if (InitData() == false) 
 		return -1;
 	 bool quit = false;
-	int ret_menu = MenuGame::ShowMenu(g_screen, g_font_MENU, "Play Game", "Exit", "img//MENU.png");
-    if (ret_menu == 1)
-        quit = true;
+	 int ret_menu = 2;
+	 int check_menu = 0;
+	 while (ret_menu ==2 && check_menu == 0)
+	 {
+		g_background.Free();
+		ret_menu = MenuGame::ShowMenu(g_screen, g_font_MENU, "Play Game", "Exit","Guide", "img//MENU2.png");
+			
+		if (ret_menu == 1)
+		{
+			quit = true;
+			break;
+		}
+
+		if (ret_menu == 0) 
+			break;
+		g_background.Free();
+		check_menu = MenuGame::ShowGuideStory(g_screen,g_font_MENU,"Back","Exit","img//StoryGuide.png");
+			
+		if (check_menu == 1)
+		{
+			quit = true;
+			break;
+		}
+		
+	}
+	 
 	if (LoadBackground() == false) 
 		return -1;
 
@@ -267,18 +298,13 @@ int main(int argc, char* argv[])
 				if (CheckColli == true || CheckColli2 == true )
 				{
 					{
-						//if (MessageBox(NULL,L"GAME OVER",L"Info",MB_OK|MB_ICONSTOP)==IDOK)
-						//{
-							//p_threat->Free();
-							//close();
-							//SDL_Quit();
-							//return 0;
-						//}
 						//p_player.CoinPlus(10);
+						Mix_Chunk* beep_sound = Mix_LoadWAV("sound//ting.wav");
+						if (beep_sound != NULL)
+						Mix_PlayChannel(-1, beep_sound, 0);
 						p_player.SetRect(0,0);
 						p_player.SetComebackTime(2);
-						//SDL_Delay(100);
-						//continue;
+						
 					}
 
 				}
@@ -304,7 +330,7 @@ int main(int argc, char* argv[])
 						objRect.y = threatattack->GetRect().y;
 						objRect.w = threatattack->get_width_frame();
 						objRect.h = threatattack->get_height_frame();
-
+	
 						SDL_Rect playerRect = p_attack->GetRect();
 
 						bool CheckColl = Collision::CheckCollision(objRect,playerRect);

@@ -24,7 +24,7 @@ const int SCREEN_BPP = 32;
 
 const int RENDER_DRAW_COLOR = 0Xff;
 
-const int FRAME_PER_SECOND = 30;
+const int FRAME_PER_SECOND = 60;
 
 #define TILE_SIZE 64
 
