@@ -334,6 +334,7 @@ int main(int argc, char* argv[])
 						if (CheckColli)
 						{
 							//p_threat->RemoveAttack(num);
+							//commit
 							break;
 						}
 
