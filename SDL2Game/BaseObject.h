@@ -19,6 +19,7 @@ public:
 protected:
 	SDL_Texture* p_object_;
 	SDL_Rect rect_;
+	int broken;
 };
 
 

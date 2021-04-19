@@ -1,7 +1,9 @@
 
 #include "stdafx.h"
 #include "MainObject.h"
-
+#include "MenuGame.h"
+#include "TextObject.h"
+#include "CommonFunction.h"
 MainObject::MainObject()
 {
 	frame_ = 0;
@@ -138,6 +140,11 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 			{
 				input_type_.jump_ = 1;
 				status_ = WALK_UP;
+				if (on_ground_ ==true){
+					Mix_Chunk* beep_sound = Mix_LoadWAV("sound//jump.wav");
+						if (beep_sound != NULL)
+							Mix_PlayChannel(-1, beep_sound, 0);
+				Mix_VolumeChunk(beep_sound,15);}
 			}
 			break;
 		case SDLK_1:
@@ -158,6 +165,8 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 				CoinPlus(2);
 			}
 			break;
+		
+
 		}
 	}
 	else if (events.type == SDL_KEYUP)
@@ -190,6 +199,9 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 		if (events.button.button == SDL_BUTTON_LEFT)
 		{
 			CoinPlus(-1);
+				Mix_Chunk* beep_sound = Mix_LoadWAV("sound//bullet.wav");
+						if (beep_sound != NULL){
+							Mix_PlayChannel(-1, beep_sound, 0);Mix_VolumeChunk(beep_sound,15);}
 			AttackObject* p_attack = new AttackObject();
 			if (BulletsType == 1)
 			p_attack->set_attack_type(AttackObject::ATTACK1);
@@ -226,8 +238,10 @@ void MainObject::regame()
 
 void MainObject::DoPlayer(Map& map_data)
 {
+	
 	if (come_back_time == 0)
 	{
+		
 		x_val_ = 0;
 		y_val_ += GRAVITY_SPEED;
 
@@ -249,6 +263,12 @@ void MainObject::DoPlayer(Map& map_data)
 		if (on_ground_ == true )
 		{
 			y_val_ = -PLAYER_JUMP;
+			TextObject StupidMes;
+	TTF_Font* font_timemes = TTF_OpenFont("font//dlxfont_.ttf", 50);
+		std::string str_rebullet = " NGU ";
+			StupidMes.SetText(str_rebullet);
+			StupidMes.LoadFromRenderText(font_timemes, g_screen);
+			StupidMes.RenderText(g_screen,0 , 0);
 		}
 
 		on_ground_ = false;
@@ -265,6 +285,7 @@ void MainObject::DoPlayer(Map& map_data)
 		come_back_time --;
 		if (come_back_time == 0)
 		{
+			
 			x_pos_ = 0;// maybe error 7
 			y_pos_ = 0;
 			x_val_ = 0;
@@ -332,6 +353,9 @@ void MainObject::CheckMap(Map& map_data)
 				map_data.tile[y1][x2] = 0;
 				map_data.tile[y2][x2] = 0;
 				CoinPlus(1);
+					Mix_Chunk* beep_sound = Mix_LoadWAV("sound//coin.wav");
+						if (beep_sound != NULL)
+						Mix_PlayChannel(-1, beep_sound, 0);
 			}
 			else 
 			{
@@ -386,6 +410,9 @@ void MainObject::CheckMap(Map& map_data)
 				map_data.tile[y2][x1] = 0;
 				map_data.tile[y2][x2] = 0;
 				CoinPlus(1);
+					Mix_Chunk* beep_sound = Mix_LoadWAV("sound//coin.wav");
+						if (beep_sound != NULL)
+						Mix_PlayChannel(-1, beep_sound, 0);
 			}
 			else
 			{
@@ -431,6 +458,10 @@ void MainObject::CheckMap(Map& map_data)
 	if (y_pos_ > map_data.max_y_)
 	{
 		come_back_time = 60;
+		Mix_Chunk* beep_sound = Mix_LoadWAV("sound//occun.wav");
+						if (beep_sound != NULL){
+							Mix_PlayChannel(-1, beep_sound, 0);}
+						
 	}
 
 

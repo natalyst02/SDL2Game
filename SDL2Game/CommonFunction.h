@@ -18,9 +18,7 @@ const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_BPP = 32;
 
-//const int COLOR_KEY_R = 169;
-//const int COLOR_KEY_G = 173;
-//const int COLOR_KEY_B = 153;
+
 
 const int RENDER_DRAW_COLOR = 0Xff;
 

@@ -22,7 +22,7 @@ public:
 	~GameMap(){;}
 
 	void LoadMap(char* name);
-	void LoadTiles(SDL_Renderer* screen);
+	void LoadTiles(SDL_Renderer* screen,int typemap);
 	void DrawMap(SDL_Renderer* screen);
 	Map getMap() const {return game_map_;};
 	void SetMap(Map& map_data) {game_map_ = map_data;}

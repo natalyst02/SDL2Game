@@ -44,15 +44,16 @@ void GameMap::LoadMap(char* name)
 
 }
 
-void GameMap::LoadTiles(SDL_Renderer* screen)
+void GameMap::LoadTiles(SDL_Renderer* screen,int typemap)
 {
 	char file_img[30];
 	FILE* fp = NULL;
 
 	for (int i = 0; i < MAX_TILES; i++)
 	{
+		if (typemap == 0)
 		sprintf_s(file_img,"map/%d.png",i);
-
+		else sprintf_s(file_img,"map2/%d.png",i);
 		fopen_s(&fp, file_img, "rb");
 		if (fp == NULL)
 		{
@@ -60,8 +61,10 @@ void GameMap::LoadTiles(SDL_Renderer* screen)
 		}
 
 		fclose(fp);
-
+		if (typemap == 0)
 		tile_mat[i].LoadImg(file_img, screen,169,173,153);
+		else 
+			tile_mat[i].LoadImg(file_img, screen,255,255,255);
 	}
 
 }

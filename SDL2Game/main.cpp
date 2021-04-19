@@ -57,6 +57,7 @@ bool InitData()
         {
             success = false;
         }
+		
         font_time = TTF_OpenFont("font//dlxfont_.ttf", 20);
         if (font_time == NULL)
         {
@@ -72,9 +73,12 @@ bool InitData()
 	 return success;
 }
 
- bool LoadBackground()
+ bool LoadBackground(int typemap)
  {
-	 bool ret = g_background.LoadImg("img//background.png", g_screen,169,173,153);
+	 bool ret;
+	 if (typemap == 0)
+	 ret = g_background.LoadImg("img//background.png", g_screen,169,173,153);
+	 else ret = g_background.LoadImg("img//background2.png", g_screen,169,173,153);
 	 if (ret == false)
 		 return false;
 
@@ -190,6 +194,11 @@ int main(int argc, char* argv[])
 	 bool quit = false;
 	 int ret_menu = 2;
 	 int check_menu = 0;
+	 int choose_game = 0;
+	 int typemap = 0;
+
+	 GameMap game_map;
+
 	 while (ret_menu ==2 && check_menu == 0)
 	 {
 		g_background.Free();
@@ -202,7 +211,28 @@ int main(int argc, char* argv[])
 		}
 
 		if (ret_menu == 0) 
+		{
+			choose_game = MenuGame::ShowMenu(g_screen, g_font_MENU, "Easy", "Hard","Exit", "img//MENU2.png");
+			if (choose_game == 2)
+			{
+				quit = true;
+				break;
+			}
+			else if (choose_game == 0)
+			{
+				typemap = 0;
+				game_map.LoadMap("map/map01.dat");
+				game_map.LoadTiles(g_screen,typemap);
+			}
+			else if (choose_game == 1)
+			{
+				typemap= 1;
+				game_map.LoadMap("map2/map01.dat");
+				game_map.LoadTiles(g_screen,typemap);
+			}
 			break;
+		}
+
 		g_background.Free();
 		check_menu = MenuGame::ShowGuideStory(g_screen,g_font_MENU,"Back","Exit","img//StoryGuide.png");
 			
@@ -214,12 +244,12 @@ int main(int argc, char* argv[])
 		
 	}
 	 
-	if (LoadBackground() == false) 
+	if (LoadBackground(typemap) == false) 
 		return -1;
 
-	GameMap game_map;
+	/*GameMap game_map;
 	game_map.LoadMap("map/map01.dat");
-	game_map.LoadTiles(g_screen);
+	game_map.LoadTiles(g_screen);*/
 
 	MainObject p_player;
 	p_player.LoadImg("img//player_right.png",g_screen,169,173,153);
@@ -235,7 +265,9 @@ int main(int argc, char* argv[])
 
 	TextObject BulletPlayer;
     BulletPlayer.SetColor(TextObject::WHITE_TEXT);
-
+	Mix_Chunk* beep_sound = Mix_LoadWAV("sound//gunny.wav");
+						if (beep_sound != NULL){
+							Mix_PlayChannel(-1, beep_sound,-1);Mix_VolumeChunk(beep_sound,20);}
 	while (!quit)
 	{
 		fps_timer.start();
@@ -245,8 +277,24 @@ int main(int argc, char* argv[])
 			{
 				quit = true;
 			}
-
+			if (g_event.type == SDL_KEYDOWN)
+			{
+			switch (g_event.key.keysym.sym)
+			{
+			case SDLK_ESCAPE:
+				{
+					ret_menu = MenuGame::ShowPause(g_screen, g_font_MENU, "GO ON", "SURRENDER", "img//MENU.png");
+			
+					if (ret_menu == 1)
+						{
+						quit = true;
+						break;
+						}
+				}
+			}
+			}
 			p_player.HandleInputAction(g_event, g_screen);
+			
 		}
 
 		SDL_SetRenderDrawColor(g_screen, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
@@ -299,12 +347,19 @@ int main(int argc, char* argv[])
 				{
 					{
 						//p_player.CoinPlus(10);
-						Mix_Chunk* beep_sound = Mix_LoadWAV("sound//ting.wav");
-						if (beep_sound != NULL)
-						Mix_PlayChannel(-1, beep_sound, 0);
-						p_player.SetRect(0,0);
-						p_player.SetComebackTime(2);
 						
+						Mix_Chunk* beep_sound = Mix_LoadWAV("sound//occun.wav");
+						if (beep_sound != NULL){
+							Mix_PlayChannel(-1, beep_sound, 0);}
+						p_player.SetRect(0,0);
+						p_player.SetComebackTime(10);
+						TextObject StupidMes;
+						TTF_Font* font_timemes = TTF_OpenFont("font//dlxfont_.ttf", 50);
+						std::string str_rebullet = " NGU ";
+						StupidMes.SetText(str_rebullet);
+						StupidMes.LoadFromRenderText(font_timemes, g_screen);
+						StupidMes.RenderText(g_screen,0,0);
+						SDL_Delay(100);
 					}
 
 				}
@@ -312,7 +367,6 @@ int main(int argc, char* argv[])
 			}
 
 		}
-
 		std::vector <AttackObject*> attackplayer = p_player.get_attack_list();
 
 		for ( int num = 0; num < attackplayer.size(); num++ )
