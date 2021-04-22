@@ -35,7 +35,7 @@
     + LoadTiles: Load hình ảnh cho từng ô nhỏ map đã chia.
     + DrawMap : Vẽ Map bằng hình ảnh
   - AttackObject:Quản lý hướng tấn công và loại đạn của nhân vật và quái vật.
-  - Colliosion: Class riêng biệt về xử lý va chạm giữa các đối tượng.
+  - Collision: Class riêng biệt về xử lý va chạm giữa các đối tượng.
   - ImpTimer: Quản lý thời gian và xử lý thêm về FPS game.
   - MenuGame: Quản lý MEnuGame và các màn chơi.
   - TextObject: Lớp có chức năng load text lên screen.
