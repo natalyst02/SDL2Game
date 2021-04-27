@@ -24,7 +24,8 @@ MainObject::MainObject()
 	come_back_time= 0;
 	BulletsType = 1;
 	CoinCount = 10;
-
+	attackspeed = 25;
+	attackrange = 350;
 }
 
 MainObject::~MainObject()
@@ -156,13 +157,13 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 		case SDLK_2:
 			{
 				BulletsType = 2 ;
-				CoinPlus(1);
+				//CoinPlus(1);
 			}
 			break;
 		case SDLK_3:
 			{
 				BulletsType = 3;
-				CoinPlus(2);
+				//CoinPlus(2);
 			}
 			break;
 		
@@ -203,11 +204,11 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 						if (beep_sound != NULL){
 							Mix_PlayChannel(-1, beep_sound, 0);Mix_VolumeChunk(beep_sound,15);}
 			AttackObject* p_attack = new AttackObject();
-			if (BulletsType == 1)
-			p_attack->set_attack_type(AttackObject::ATTACK1);
-			else if (BulletsType == 2) 
-			p_attack->set_attack_type(AttackObject::ATTACK2);
-			else p_attack->set_attack_type(AttackObject::ATTACK3);
+			if (BulletsType == 1){
+				p_attack->set_attack_type(AttackObject::ATTACK1);attackspeed =25;}
+			else if (BulletsType == 2) {
+				p_attack->set_attack_type(AttackObject::ATTACK2);attackspeed = 35;}
+			else{ p_attack->set_attack_type(AttackObject::ATTACK3);attackspeed = 25;attackrange=400;}
 			p_attack->LoadAttackType(screen);
 			if (status_ == WALK_LEFT) 
 			{
@@ -219,7 +220,7 @@ void MainObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 			p_attack->set_attack_sign(AttackObject::SIGN_RIGHT);
 			p_attack->SetRect(this->rect_.x + width_frame_ - 20, rect_.y + height_frame_ *0.05);
 			}
-			p_attack->set_x_val(25);
+			p_attack->set_x_val(attackspeed);
 			p_attack->set_is_move(true);
 
 			p_attack_list_.push_back(p_attack);
@@ -477,7 +478,7 @@ void MainObject::HandleAttackObject(SDL_Renderer* des)
 			if (p_attack->get_is_move())
 			{
 				int distance = abs(rect_.x - p_attack->GetRect().x);
-				if (distance < 400 )
+				if (distance < attackrange )
 				{
 				p_attack->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
 				p_attack->Render(des);

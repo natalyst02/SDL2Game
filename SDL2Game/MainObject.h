@@ -75,6 +75,9 @@ private:
 
 	int BulletsType;
 	int CoinCount;
+
+	int attackspeed;
+	int attackrange;
 };
 
 #endif
