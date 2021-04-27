@@ -8,7 +8,7 @@
   - Game tính giờ, mỗi lần chết nhân vật sẽ được đưa về vị trí ban đầu.
   - Lối chơi đơn giản, thao tác dễ dàng.
   - Giới hạn lượng đạn tấn công giúp GamePlay da dạng hơn.
-  - Sự dụng hình ảnh, âm thanh tự tạo và re-edit từ interner.
+  - Sự dụng hình ảnh, âm thanh tự tạo và re-edited từ internet.
 
 * Các đối tượng trong game
   - Nhân vật với 3 loại đạn với công năng khác nhau.
@@ -39,3 +39,17 @@
   - ImpTimer: Quản lý thời gian và xử lý thêm về FPS game.
   - MenuGame: Quản lý MEnuGame và các màn chơi.
   - TextObject: Lớp có chức năng load text lên screen.
+* Tham Khảo: Chương trình có tham khảo một số thuật toán như: CheckCollision, MoveonMap từ anh Toàn Phạm(fb:https://www.facebook.com/toan.pt.88)
+   - CheckCollion: https://phattrienphanmem123az.com/lap-trinh-game-cpp/bai-11-xu-ly-va-cham.html
+   - MoveonMap: https://phattrienphanmem123az.com/lap-trinh-game-cpp/bai-10-di-chuyen-man-hinh.html
+   - code đã được cải biên để hợp lý với game: CheckCollision giữa cả nhân vật, quái vật và các lớp đạn bắn, MoveonMap được cải biên để di chuyển và thao tác trên nhiều đối tượng hơn.
+   
+ * Đánh giá :
+  - Mức điểm: 9+
+  - Game được tìm hiểu và phát triển trong một khoảng thời gian khá dài, được chỉnh sửa từng chút một.
+  - Hình ảnh tự thiết kế.
+  - Game khá đơn giản chưa tích hợp được nhiều kĩ năng đa dạng.
+  - Game được hình thành từ một số nguồn và chỉnh sửa lại bởi tác giả.
+  - Kinh nghiêm làm game chưa nhiều nên game còn khá đơn giản và đơn điệu.
+ 
+  
