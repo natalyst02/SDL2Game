@@ -45,11 +45,12 @@
    - code đã được cải biên để hợp lý với game: CheckCollision giữa cả nhân vật, quái vật và các lớp đạn bắn, MoveonMap được cải biên để di chuyển và thao tác trên nhiều đối tượng hơn.
    
  * Đánh giá :
-  - Mức điểm: 9+
-  - Game được tìm hiểu và phát triển trong một khoảng thời gian khá dài, được chỉnh sửa từng chút một.
-  - Hình ảnh tự thiết kế.
-  - Game khá đơn giản chưa tích hợp được nhiều kĩ năng đa dạng.
-  - Game được hình thành từ một số nguồn và chỉnh sửa lại bởi tác giả.
-  - Kinh nghiêm làm game chưa nhiều nên game còn khá đơn giản và đơn điệu.
+ 
+    - Mức điểm: 9+
+    - Game được tìm hiểu và phát triển trong một khoảng thời gian khá dài, được chỉnh sửa từng chút một.
+    - Hình ảnh tự thiết kế.
+    - Game khá đơn giản chưa tích hợp được nhiều kĩ năng đa dạng.
+    - Game được hình thành từ một số nguồn và chỉnh sửa lại bởi tác giả.
+    - Kinh nghiêm làm game chưa nhiều nên game còn khá đơn giản và đơn điệu.
  
   
