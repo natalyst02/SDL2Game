@@ -247,10 +247,7 @@ int main(int argc, char* argv[])
 	if (LoadBackground(typemap) == false) 
 		return -1;
 
-	/*GameMap game_map;
-	game_map.LoadMap("map/map01.dat");
-	game_map.LoadTiles(g_screen);*/
-
+	
 	MainObject p_player;
 	p_player.LoadImg("img//player_right.png",g_screen,169,173,153);
 	p_player.set_clips();
